@@ -1,0 +1,4 @@
+# ignoruj wszystkie pliki znajdujące się w katalogu build/
+MandelbrotDrawer/bin/
+MandelbrotDrawer/obj/
+.vs/
