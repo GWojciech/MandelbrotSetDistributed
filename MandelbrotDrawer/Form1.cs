@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MandelbrotDrawer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,42 +13,14 @@ namespace MandelbrotServer
 {
     public partial class Form1 : Form
     {
-
-        private Graphics graphics;
-
+        int downX, downY;
+        private Mandelbrot mandelbrot;
 
         public Form1()
         {
             InitializeComponent();
-        }
-
-        double scale_y0(int y0)
-        {
-            return 2.0 * (((double)y0) / (pictureBox.Height - 1)) - 1.0;
-        }
-
-        double scale_x0(int x0)
-        {
-            return 3.5 * (((double)x0) / (pictureBox.Width - 1)) - 2.5;
-        }
-
-        int Calculate_mandelbrot(int xp, int yp)
-        {
-            double x, y, x2, y2;
-            int iteration = 0;
-            double x0 = scale_x0(xp);
-            double y0 = scale_y0(yp);
-            x = y = x2 = y2 = 0.0;
-            while (x2 + y2 <= 4.0 && iteration < 1000)
-            {
-                double tmp = x2 - y2 + x0;
-                y = 2.0 * x * y + y0;
-                x = tmp;
-                iteration++;
-                x2 = x * x;
-                y2 = y * y;
-            }
-            return iteration;
+            mandelbrot = new Mandelbrot(pictureBox);
+            panel1.BackColor = Color.FromArgb(0, Color.Black);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -56,32 +29,18 @@ namespace MandelbrotServer
             pictureBox.Image = DrawMandelbrot();
             watch.Stop();
             Console.WriteLine(watch.Elapsed);
-            //graphics = graphics.fromimage(picturebox.image);
-            //int result;
-            //for (int i = 0; i < picturebox.height; i++)
-            //{
-            //    for (int j = 0; j < picturebox.width; j++)
-            //    {
-            //        result = calculate_mandelbrot(j, i);
-            //        graphics.drawrectangle(new pen((color)colortranslator.fromole(result & 255)), j, i, 1, 1);
-
-            //    }
-            //}
         }
 
         public Bitmap DrawMandelbrot()
         {
             Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
-            //int result;
             Parallel.For(0, pictureBox.Width, i =>
             {
-                //Parallel.For(0, pictureBox.Height, j =>
-                //{
-                for (int j = 0; j < pictureBox.Height; j++) {
-                    int result = Calculate_mandelbrot(i, j);
+                Parallel.For(0, pictureBox.Height, j =>
+                {
+                    int result = mandelbrot.Calculate_mandelbrot(i, j);
                     lock (bitmap)
                     {
-                        //bitmap.SetPixel(i, j, (Color)ColorTranslator.FromOle(result & 255));
                         if (result > 0 && result < 333)
                         {
                             bitmap.SetPixel(i, j, Color.FromArgb(result & 255, 0, 0));
@@ -100,13 +59,54 @@ namespace MandelbrotServer
                             bitmap.SetPixel(i, j, Color.FromArgb(0, 0, 0));
 
                         }
-                    }
+                        //bitmap.SetPixel(i, j, (Color) ColorTranslator.FromWin32(result));
 
-                }
-                //});
+                    }
+                });
+
+                
             });
             return bitmap;
         }
 
+        private void pictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Left)
+            {
+                downX = e.X;
+                downY = e.Y;
+
+                panel1.Width = 0;
+                panel1.Height = 0;
+                panel1.Visible = true;
+            }
+
+        }
+
+        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            panel1.Visible = false;
+            mandelbrot.SetNewScaleAttributes(Math.Min(downX, e.X), Math.Max(downX, e.X), Math.Min(downY, e.Y), Math.Max(downY, e.Y));
+            pictureBox.Image = DrawMandelbrot();
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            mandelbrot = new Mandelbrot(pictureBox);
+            pictureBox.Image = DrawMandelbrot();
+        }
+
+
+        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                panel1.Width = Math.Abs(downX - e.X);
+                panel1.Height = Math.Abs(downY - e.Y);
+                panel1.Left = pictureBox.Left + Math.Min(downX, e.X);
+                panel1.Top = pictureBox.Top + Math.Min(downY, e.Y);
+            }
+        }
     }
 }
