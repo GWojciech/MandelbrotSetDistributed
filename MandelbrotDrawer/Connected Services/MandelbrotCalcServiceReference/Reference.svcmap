@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8b8f88cb-6519-400c-a983-b955762d705b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8000/MandelbrotCalcService1/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="48ff619d-ae40-45a2-a24c-f2b7986ee907" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd2" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="4e9bc6a9-adb1-4812-9cfd-fa63bd44cccd" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd1" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="7b2294c5-4ccd-4261-a751-e7c92985776e" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd0" />
+    <MetadataFile FileName="MandelbrotCalcService.wsdl" MetadataType="Wsdl" ID="3252a521-2c16-490a-b3e2-756acd47ff09" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?wsdl" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="5b0aa624-3358-45d1-a1d5-122dcf51cd2f" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?disco" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="e7426268-ad8e-48f6-938c-998b9cf241f0" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

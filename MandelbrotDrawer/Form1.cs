@@ -1,5 +1,6 @@
 ﻿using MandelbrotDrawer;
 using System;
+using MandelbrotDrawer.MandelbrotCalcServiceReference;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,66 +9,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ServiceModel;
+
 
 namespace MandelbrotServer
 {
     public partial class Form1 : Form
     {
         int downX, downY;
-        private Mandelbrot mandelbrot;
+
+        Mandelbrot mandelbrot;
+        ConnectionManager connectionManager;
 
         public Form1()
         {
             InitializeComponent();
-            mandelbrot = new Mandelbrot(pictureBox);
-            panel1.BackColor = Color.FromArgb(0, Color.Black);
+            mandelbrot = new Mandelbrot(pictureBox.Width, pictureBox.Height);
+            connectionManager = new ConnectionManager();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button_go_Click(object sender, EventArgs e)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            pictureBox.Image = DrawMandelbrot();
+            if (connectionManager.getNumberOfServers() > 0)
+            {
+                pictureBox.Image = connectionManager.getImageFromServer(pictureBox.Width, pictureBox.Height);
+            }
+            else
+            {
+                pictureBox.Image = mandelbrot.DrawMandelbrot();
+            }
+
             watch.Stop();
             Console.WriteLine(watch.Elapsed);
         }
 
-        public Bitmap DrawMandelbrot()
-        {
-            Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
-            Parallel.For(0, pictureBox.Width, i =>
-            {
-                Parallel.For(0, pictureBox.Height, j =>
-                {
-                    int result = mandelbrot.Calculate_mandelbrot(i, j);
-                    lock (bitmap)
-                    {
-                        if (result > 0 && result < 333)
-                        {
-                            bitmap.SetPixel(i, j, Color.FromArgb(result & 255, 0, 0));
-
-                        }
-                        else if (result >= 333 && result < 666)
-                        {
-                            bitmap.SetPixel(i, j, Color.FromArgb(0, result & 255, 0));
-
-                        }
-                        else if (result >= 666 && result < 999)
-                            bitmap.SetPixel(i, j, Color.FromArgb(0, 0, result & 255));
-
-                        else
-                        {
-                            bitmap.SetPixel(i, j, Color.FromArgb(0, 0, 0));
-
-                        }
-                        //bitmap.SetPixel(i, j, (Color) ColorTranslator.FromWin32(result));
-
-                    }
-                });
-
-                
-            });
-            return bitmap;
-        }
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
@@ -87,16 +63,20 @@ namespace MandelbrotServer
         {
             panel1.Visible = false;
             mandelbrot.SetNewScaleAttributes(Math.Min(downX, e.X), Math.Max(downX, e.X), Math.Min(downY, e.Y), Math.Max(downY, e.Y));
-            pictureBox.Image = DrawMandelbrot();
+            pictureBox.Image = mandelbrot.DrawMandelbrot();
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button_server_Click(object sender, EventArgs e)
         {
-            mandelbrot = new Mandelbrot(pictureBox);
-            pictureBox.Image = DrawMandelbrot();
+            connectionManager.SetServers();
+            server_info_textBox.Text = "Connected: " + connectionManager.getNumberOfServers();
         }
 
+        private void server_info_textBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {

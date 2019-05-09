@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MandelbrotWcfServiceLibrary", "MandelbrotWcfServiceLibrary\MandelbrotWcfServiceLibrary.csproj", "{DFA6286B-7BC0-4323-92B0-F9C539B8A671}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MandelbrotDrawer", "MandelbrotDrawer\MandelbrotDrawer.csproj", "{74D87831-D93F-4DCE-B3BB-C36AEBA521D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MandelbrotCalc", "MandelbrotCalc\MandelbrotCalc.csproj", "{CDE75BC1-EC56-4818-BDDB-0413517CE8BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFA6286B-7BC0-4323-92B0-F9C539B8A671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFA6286B-7BC0-4323-92B0-F9C539B8A671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFA6286B-7BC0-4323-92B0-F9C539B8A671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFA6286B-7BC0-4323-92B0-F9C539B8A671}.Release|Any CPU.Build.0 = Release|Any CPU
 		{74D87831-D93F-4DCE-B3BB-C36AEBA521D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{74D87831-D93F-4DCE-B3BB-C36AEBA521D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74D87831-D93F-4DCE-B3BB-C36AEBA521D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74D87831-D93F-4DCE-B3BB-C36AEBA521D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDE75BC1-EC56-4818-BDDB-0413517CE8BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDE75BC1-EC56-4818-BDDB-0413517CE8BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDE75BC1-EC56-4818-BDDB-0413517CE8BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDE75BC1-EC56-4818-BDDB-0413517CE8BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using MandelbrotDrawer.MandelbrotCalcServiceReference;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,29 +14,50 @@ namespace MandelbrotDrawer
     class Mandelbrot
     {
 
-        PictureBox pictureBox;
-        double yScale1 = 2.0, yScale2 = -1.0, xScale1 = 3.5, xScale2 = -2.5;  
+        int Width;
+        int Height;
 
-        public Mandelbrot(PictureBox pictureBox)
+        double yScale1 = 2.0, yScale2 = -1.0, xScale1 = 3.5, xScale2 = -2.5;
+
+        public Mandelbrot(int width, int height)
         {
-            this.pictureBox = pictureBox;
-        }
-        double scaleY0(int y0)
-        {
-            return yScale1 * (((double)y0) / (pictureBox.Height - 1)) + yScale2;
+            this.Width = width;
+            this.Height = height;
         }
 
-        double scaleX0(int x0)
+        double ScaleY0(int y0)
         {
-            return xScale1 * (((double)x0) / (pictureBox.Width - 1)) + xScale2;
+            return yScale1 * (((double)y0) / (Height - 1)) + yScale2;
+        }
+
+
+        double ScaleX0(int x0)
+        {
+            return xScale1 * (((double)x0) / (Width - 1)) + xScale2;
+        }
+
+        public void SetNewScaleAttributes(int x1, int x2, int y1, int y2)
+        {
+            double coordinateX1, coordinateX2, coordinateY1, coordinateY2;
+            coordinateX1 = ScaleX0(x1);
+            coordinateX2 = ScaleX0(x2);
+            coordinateY1 = ScaleY0(y1);
+            coordinateY2 = ScaleY0(y2);
+
+            this.xScale2 = coordinateX1;
+            this.xScale1 = coordinateX2 + Math.Abs(this.xScale2);
+
+            this.yScale2 = coordinateY1;
+            this.yScale1 = coordinateY2 + Math.Abs(this.yScale2);
+
         }
 
         public int Calculate_mandelbrot(int xp, int yp)
         {
             double x, y, x2, y2;
             int iteration = 0;
-            double x0 = scaleX0(xp);
-            double y0 = scaleY0(yp);
+            double x0 = ScaleX0(xp);
+            double y0 = ScaleY0(yp);
 
             x = y = x2 = y2 = 0.0;
             while (x2 + y2 <= 4.0 && iteration < 2000)
@@ -47,20 +72,44 @@ namespace MandelbrotDrawer
             return iteration == 2000 ? 0 : iteration;
         }
 
-       public void SetNewScaleAttributes(int x1, int x2, int y1, int y2)
+
+        public Bitmap DrawMandelbrot()
         {
-            double coordinateX1, coordinateX2, coordinateY1, coordinateY2;
-            coordinateX1 = scaleX0(x1);
-            coordinateX2 = scaleX0(x2);
-            coordinateY1 = scaleY0(y1);
-            coordinateY2 = scaleY0(y2);
+            Bitmap bitmap = new Bitmap(Width, Height);
+            Parallel.For(0, Width, i =>
+            {
+                Parallel.For(0, Height, j =>
+                {
+                    int result = Calculate_mandelbrot(i, j);
+                    lock (bitmap)
+                    {
+                        if (result > 0 && result < 333)
+                        {
+                            bitmap.SetPixel(i, j, Color.FromArgb(result & 255, 0, 0));
 
-            this.xScale2 = coordinateX1;
-            this.xScale1 = coordinateX2 + Math.Abs(this.xScale2);
+                        }
+                        else if (result >= 333 && result < 666)
+                        {
+                            bitmap.SetPixel(i, j, Color.FromArgb(0, result & 255, 0));
 
-            this.yScale2 = coordinateY1;
-            this.yScale1 = coordinateY2 + Math.Abs(this.yScale2);
+                        }
+                        else if (result >= 666 && result < 999)
+                            bitmap.SetPixel(i, j, Color.FromArgb(0, 0, result & 255));
 
-        } 
+                        else
+                        {
+                            bitmap.SetPixel(i, j, Color.FromArgb(0, 0, 0));
+
+                        }
+                    }
+                });
+
+
+            });
+            bitmap.Save("bitmap.png", ImageFormat.Png);
+            return bitmap;
+        }
+
     }
+
 }
