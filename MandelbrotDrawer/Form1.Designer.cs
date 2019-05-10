@@ -37,6 +37,7 @@ namespace MandelbrotServer
             this.button_server = new System.Windows.Forms.Button();
             this.numericUpDownServers = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.animation_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServers)).BeginInit();
             this.SuspendLayout();
@@ -118,12 +119,23 @@ namespace MandelbrotServer
             this.label1.TabIndex = 27;
             this.label1.Text = "frames/server";
             // 
+            // animation_button
+            // 
+            this.animation_button.Location = new System.Drawing.Point(1119, 178);
+            this.animation_button.Name = "animation_button";
+            this.animation_button.Size = new System.Drawing.Size(75, 23);
+            this.animation_button.TabIndex = 28;
+            this.animation_button.Text = "Animacja";
+            this.animation_button.UseVisualStyleBackColor = true;
+            this.animation_button.Click += new System.EventHandler(this.animation_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.animation_button);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numericUpDownServers);
             this.Controls.Add(this.button_server);
@@ -148,6 +160,7 @@ namespace MandelbrotServer
         private System.Windows.Forms.Button button_server;
         private System.Windows.Forms.NumericUpDown numericUpDownServers;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button animation_button;
     }
 }
 

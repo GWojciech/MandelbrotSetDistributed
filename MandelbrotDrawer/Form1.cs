@@ -37,7 +37,7 @@ namespace MandelbrotServer
             }
             else
             {
-                pictureBox.Image = mandelbrot.DrawMandelbrot();
+                pictureBox.Image = mandelbrot.DrawMandelbrot(0);
             }
 
             watch.Stop();
@@ -62,8 +62,8 @@ namespace MandelbrotServer
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             panel1.Visible = false;
-            mandelbrot.SetNewScaleAttributes(Math.Min(downX, e.X), Math.Max(downX, e.X), Math.Min(downY, e.Y), Math.Max(downY, e.Y));
-            pictureBox.Image = mandelbrot.DrawMandelbrot();
+            mandelbrot.CalculateScaleAttributes(Math.Min(downX, e.X), Math.Max(downX, e.X), Math.Min(downY, e.Y), Math.Max(downY, e.Y), 10);
+            pictureBox.Image = mandelbrot.DrawMandelbrot(0);
 
         }
 
@@ -76,6 +76,14 @@ namespace MandelbrotServer
         private void server_info_textBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void animation_button_Click(object sender, EventArgs e)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            mandelbrot.DrawMandelbrot(1);
+            watch.Stop();
+            Console.WriteLine(watch.Elapsed);
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
