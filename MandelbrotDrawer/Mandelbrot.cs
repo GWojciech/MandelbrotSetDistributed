@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace MandelbrotDrawer
 {
-    class Mandelbrot
+    internal class Mandelbrot
     {
 
         int Width;
@@ -26,6 +26,11 @@ namespace MandelbrotDrawer
             this.Height = height;
             Scales = new List<double[]>();
             Scales.Add(new double[] { 3.5d, -2.5d, 2.0d, -1.0d });
+        }
+
+        public List<double[]> GetScales()
+        {
+            return Scales;
         }
 
         double ScaleY0(int y0, double[] scale)
@@ -151,7 +156,7 @@ namespace MandelbrotDrawer
 
 
                 });
-                bitmap.Save("bitmap" + count.ToString() + ".png", ImageFormat.Png);
+                bitmap.Save("bitmap" + count.ToString() + ".Jpeg", ImageFormat.Jpeg);
 
             }
             return bitmap;

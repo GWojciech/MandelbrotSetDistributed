@@ -9,7 +9,9 @@
     <GenerateInternalTypes>false</GenerateInternalTypes>
     <GenerateMessageContracts>false</GenerateMessageContracts>
     <NamespaceMappings />
-    <CollectionMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
     <GenerateSerializableTypes>true</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
@@ -23,9 +25,11 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="48ff619d-ae40-45a2-a24c-f2b7986ee907" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd2" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="4e9bc6a9-adb1-4812-9cfd-fa63bd44cccd" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd1" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="7b2294c5-4ccd-4261-a751-e7c92985776e" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd0" />
     <MetadataFile FileName="MandelbrotCalcService.wsdl" MetadataType="Wsdl" ID="3252a521-2c16-490a-b3e2-756acd47ff09" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?wsdl" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="7b2294c5-4ccd-4261-a751-e7c92985776e" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd0" />
+    <MetadataFile FileName="item5.xsd" MetadataType="Schema" ID="3d694d5c-ad50-4aa3-9bb0-a9ec64cdf3b8" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd5" />
+    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="23c39e76-bc4d-448a-8b16-b2daec05aff8" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd4" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="4e9bc6a9-adb1-4812-9cfd-fa63bd44cccd" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd1" />
     <MetadataFile FileName="item.disco" MetadataType="Disco" ID="5b0aa624-3358-45d1-a1d5-122dcf51cd2f" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?disco" />
     <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="e7426268-ad8e-48f6-938c-998b9cf241f0" SourceId="1" SourceUrl="http://localhost:8000/MandelbrotCalcService1/?xsd=xsd3" />
   </Metadata>

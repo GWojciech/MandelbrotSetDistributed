@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -16,7 +17,7 @@ namespace MandelbrotWcfServiceLibrary
         string GetData(int value);
 
         [OperationContract]
-        Bitmap DrawMandelbrot(int width, int height);
+        List<MemoryStream> DrawMandelbrot(int width, int height, List<List<double>> Scales);
 
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);

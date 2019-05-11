@@ -85,10 +85,10 @@ namespace MandelbrotDrawer.MandelbrotCalcServiceReference {
         System.Threading.Tasks.Task<string> GetDataAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMandelbrotCalc/DrawMandelbrot", ReplyAction="http://tempuri.org/IMandelbrotCalc/DrawMandelbrotResponse")]
-        System.Drawing.Bitmap DrawMandelbrot(int width, int height);
+        System.Collections.Generic.List<System.IO.MemoryStream> DrawMandelbrot(int width, int height, System.Collections.Generic.List<System.Collections.Generic.List<double>> Scales);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMandelbrotCalc/DrawMandelbrot", ReplyAction="http://tempuri.org/IMandelbrotCalc/DrawMandelbrotResponse")]
-        System.Threading.Tasks.Task<System.Drawing.Bitmap> DrawMandelbrotAsync(int width, int height);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<System.IO.MemoryStream>> DrawMandelbrotAsync(int width, int height, System.Collections.Generic.List<System.Collections.Generic.List<double>> Scales);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMandelbrotCalc/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IMandelbrotCalc/GetDataUsingDataContractResponse")]
         MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType GetDataUsingDataContract(MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType composite);
@@ -138,12 +138,12 @@ namespace MandelbrotDrawer.MandelbrotCalcServiceReference {
             return base.Channel.GetDataAsync(value);
         }
         
-        public System.Drawing.Bitmap DrawMandelbrot(int width, int height) {
-            return base.Channel.DrawMandelbrot(width, height);
+        public System.Collections.Generic.List<System.IO.MemoryStream> DrawMandelbrot(int width, int height, System.Collections.Generic.List<System.Collections.Generic.List<double>> Scales) {
+            return base.Channel.DrawMandelbrot(width, height, Scales);
         }
         
-        public System.Threading.Tasks.Task<System.Drawing.Bitmap> DrawMandelbrotAsync(int width, int height) {
-            return base.Channel.DrawMandelbrotAsync(width, height);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.IO.MemoryStream>> DrawMandelbrotAsync(int width, int height, System.Collections.Generic.List<System.Collections.Generic.List<double>> Scales) {
+            return base.Channel.DrawMandelbrotAsync(width, height, Scales);
         }
         
         public MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType GetDataUsingDataContract(MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType composite) {

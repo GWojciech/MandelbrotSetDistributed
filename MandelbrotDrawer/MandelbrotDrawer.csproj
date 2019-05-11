@@ -87,6 +87,12 @@
     <None Include="Connected Services\MandelbrotCalcServiceReference\item3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\MandelbrotCalcServiceReference\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MandelbrotCalcServiceReference\item5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\MandelbrotCalcServiceReference\MandelbrotCalcService.wsdl" />
     <None Include="Connected Services\MandelbrotCalcServiceReference\MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

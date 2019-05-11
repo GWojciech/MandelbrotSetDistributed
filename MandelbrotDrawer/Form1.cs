@@ -31,15 +31,7 @@ namespace MandelbrotServer
         private void button_go_Click(object sender, EventArgs e)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            if (connectionManager.getNumberOfServers() > 0)
-            {
-                pictureBox.Image = connectionManager.getImageFromServer(pictureBox.Width, pictureBox.Height);
-            }
-            else
-            {
-                pictureBox.Image = mandelbrot.DrawMandelbrot(0);
-            }
-
+            pictureBox.Image = mandelbrot.DrawMandelbrot(0);
             watch.Stop();
             Console.WriteLine(watch.Elapsed);
         }
@@ -62,7 +54,7 @@ namespace MandelbrotServer
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             panel1.Visible = false;
-            mandelbrot.CalculateScaleAttributes(Math.Min(downX, e.X), Math.Max(downX, e.X), Math.Min(downY, e.Y), Math.Max(downY, e.Y), 10);
+            mandelbrot.CalculateScaleAttributes(Math.Min(downX, e.X), Math.Max(downX, e.X), Math.Min(downY, e.Y), Math.Max(downY, e.Y), Convert.ToInt32(numericUpDownFrames.Value));
             pictureBox.Image = mandelbrot.DrawMandelbrot(0);
 
         }
@@ -81,7 +73,16 @@ namespace MandelbrotServer
         private void animation_button_Click(object sender, EventArgs e)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            mandelbrot.DrawMandelbrot(1);
+            if (connectionManager.getNumberOfServers() == 0)
+            {
+                mandelbrot.DrawMandelbrot(1);
+            }
+            else
+            {
+                connectionManager.SetScales(mandelbrot.GetScales());
+                connectionManager.SetNumberOfFramesPerServer(Convert.ToInt32(numericUpDownServers.Value));
+                connectionManager.getImagesFromServers(pictureBox.Width, pictureBox.Height);
+            }
             watch.Stop();
             Console.WriteLine(watch.Elapsed);
         }

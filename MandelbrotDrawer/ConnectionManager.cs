@@ -2,20 +2,29 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MandelbrotDrawer
 {
     class ConnectionManager
     {
-        List<IMandelbrotCalc> Servers;
+        private List<IMandelbrotCalc> Servers;
+        private byte[] StateOfFrame;
+        private Thread[] Threads;
+        private List<double[]> Scales;
+        int numberOfFramesPerServer;
+        bool end = false;
+        
 
         public ConnectionManager()
         {
-            Servers = new List<IMandelbrotCalc>();
+            SetServers();
         }
 
 
@@ -32,9 +41,9 @@ namespace MandelbrotDrawer
             }
         }
 
-
         public void SetServers()
         {
+            Servers = new List<IMandelbrotCalc>();
             IMandelbrotCalc potentialServer;
             String name;
             for (int i = 1; i <= 6; i++)
@@ -55,6 +64,59 @@ namespace MandelbrotDrawer
             }
         }
 
+        public void SetScales(List<double[]> scales)
+        {
+            this.Scales = scales;
+            StateOfFrame = new byte[Scales.Count];
+        }
+
+        public void SetNumberOfFramesPerServer(int numberOfFramesPerServer)
+        {
+            this.numberOfFramesPerServer = numberOfFramesPerServer;
+        }
+
+        private void ConnectWithServerThread(int number, int width, int height)
+        {
+            List <List<double>> scalesTmp = new List<List<double>>();
+            List<MemoryStream> bitmaps = new List<MemoryStream>();
+            List<int> frames;
+            for (; ; )
+            {
+                frames = new List<int>();
+                scalesTmp = new List<List<double>>();
+                lock (StateOfFrame) {
+                    for (int counter = 0; counter < Scales.Count; counter++ )
+                    {
+                        if (StateOfFrame[counter] == 0 && scalesTmp.Count < numberOfFramesPerServer)
+                        {
+                            scalesTmp.Add(Scales[counter].ToList());
+                            StateOfFrame[counter] = 1;
+                            frames.Add(counter);
+                        }
+                    }
+                }
+                Console.WriteLine("{0} {1} {2}", number, width, height);
+                if (scalesTmp.Count > 0)
+                {
+                    bitmaps = Servers[number].DrawMandelbrot(width, height, scalesTmp);
+                    Image image;
+                    int numberOfFrame = 0;
+                    foreach (MemoryStream bitmap in bitmaps)
+                    {
+                        image = Image.FromStream(bitmap);
+                        image.Save("bitmap" + frames[numberOfFrame] + ".Jpeg", ImageFormat.Jpeg);
+                        numberOfFrame++;
+
+                    }
+                }
+                else
+                {
+                    break;
+                }
+                    
+            }
+        }
+
         public int getNumberOfServers()
         {
             if (Servers != null)
@@ -64,14 +126,31 @@ namespace MandelbrotDrawer
             return 0;
         }
 
-        public Bitmap getImageFromServer(int width, int height)
+        public void getImagesFromServers(int width, int height)
         {
             if (Servers != null)
             {
-                Bitmap bitmap = Servers[0].DrawMandelbrot(width, height);
-                return bitmap;
+                Threads = new Thread[Servers.Count];
+                for(int i=0; i<Servers.Count; i++)
+                {
+                    int serverNr = i;
+                    Console.WriteLine(i);
+                    Threads[serverNr] = new Thread(delegate () { ConnectWithServerThread(serverNr, width, height); })
+                    {
+                        IsBackground = true
+                    };
+                    Threads[serverNr].Start();
+                    
+                }
+
+                for(int i=0; i<Servers.Count; i++)
+                {
+                    Threads[i].Join();
+                }
+
             }
-            return null;
         }
+
+
     }
 }

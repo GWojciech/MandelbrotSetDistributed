@@ -38,8 +38,11 @@ namespace MandelbrotServer
             this.numericUpDownServers = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.animation_button = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDownFrames = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrames)).BeginInit();
             this.SuspendLayout();
             // 
             // button_go
@@ -109,6 +112,11 @@ namespace MandelbrotServer
             this.numericUpDownServers.Name = "numericUpDownServers";
             this.numericUpDownServers.Size = new System.Drawing.Size(54, 20);
             this.numericUpDownServers.TabIndex = 26;
+            this.numericUpDownServers.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
             // 
             // label1
             // 
@@ -121,13 +129,39 @@ namespace MandelbrotServer
             // 
             // animation_button
             // 
-            this.animation_button.Location = new System.Drawing.Point(1119, 178);
+            this.animation_button.Location = new System.Drawing.Point(1119, 234);
             this.animation_button.Name = "animation_button";
             this.animation_button.Size = new System.Drawing.Size(75, 23);
             this.animation_button.TabIndex = 28;
-            this.animation_button.Text = "Animacja";
+            this.animation_button.Text = "Animate";
             this.animation_button.UseVisualStyleBackColor = true;
             this.animation_button.Click += new System.EventHandler(this.animation_button_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1175, 187);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "frames/zoom";
+            // 
+            // numericUpDownFrames
+            // 
+            this.numericUpDownFrames.Location = new System.Drawing.Point(1119, 183);
+            this.numericUpDownFrames.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numericUpDownFrames.Name = "numericUpDownFrames";
+            this.numericUpDownFrames.Size = new System.Drawing.Size(54, 20);
+            this.numericUpDownFrames.TabIndex = 29;
+            this.numericUpDownFrames.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
@@ -135,6 +169,8 @@ namespace MandelbrotServer
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.numericUpDownFrames);
             this.Controls.Add(this.animation_button);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numericUpDownServers);
@@ -147,6 +183,7 @@ namespace MandelbrotServer
             this.Text = "Mandelbrot set";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrames)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,6 +198,8 @@ namespace MandelbrotServer
         private System.Windows.Forms.NumericUpDown numericUpDownServers;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button animation_button;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDownFrames;
     }
 }
 
