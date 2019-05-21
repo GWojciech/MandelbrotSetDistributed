@@ -31,16 +31,14 @@ namespace MandelbrotWcfServiceLibrary
                 bitmap = new Bitmap(width, height);
                 scale = Scales[count].ToArray();
                 Console.WriteLine("{0}, {1}", scale[0], scale[1]);
-                //Parallel.For(0, width, i =>
-                //{
-                //    Parallel.For(0, height, j =>
-                //    {
-                for (int i = 0; i < width; i++)
+                Parallel.For(0, width, i =>
                 {
-                    for (int j = 0; j < height; j++)
+                    Parallel.For(0, height, j =>
                     {
-
-
+                //for (int i = 0; i < width; i++)
+                //{
+                //    for (int j = 0; j < height; j++)
+                //    {
 
                         int result = mandelbrot.Calculate_mandelbrot(i, j, scale);
                         lock (bitmap)
@@ -64,12 +62,12 @@ namespace MandelbrotWcfServiceLibrary
 
                             }
                         }
-                        //    });
+                    });
 
 
-                        //});
-                    }
-                }
+                });
+                //    }
+                //}
                 stream = new MemoryStream();
                 bitmap.Save(stream, ImageFormat.Jpeg);
                 images.Add(stream);

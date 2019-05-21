@@ -30,6 +30,7 @@ namespace MandelbrotServer
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button_go = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -40,6 +41,8 @@ namespace MandelbrotServer
             this.animation_button = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownFrames = new System.Windows.Forms.NumericUpDown();
+            this.showAnimationButton = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrames)).BeginInit();
@@ -163,12 +166,28 @@ namespace MandelbrotServer
             0,
             0});
             // 
+            // showAnimationButton
+            // 
+            this.showAnimationButton.Enabled = false;
+            this.showAnimationButton.Location = new System.Drawing.Point(1200, 234);
+            this.showAnimationButton.Name = "showAnimationButton";
+            this.showAnimationButton.Size = new System.Drawing.Size(62, 23);
+            this.showAnimationButton.TabIndex = 31;
+            this.showAnimationButton.Text = "Start";
+            this.showAnimationButton.UseVisualStyleBackColor = true;
+            this.showAnimationButton.Click += new System.EventHandler(this.showAnimationButton_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.showAnimationButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numericUpDownFrames);
             this.Controls.Add(this.animation_button);
@@ -200,6 +219,8 @@ namespace MandelbrotServer
         private System.Windows.Forms.Button animation_button;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDownFrames;
+        private System.Windows.Forms.Button showAnimationButton;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

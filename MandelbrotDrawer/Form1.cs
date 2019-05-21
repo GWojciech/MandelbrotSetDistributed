@@ -1,15 +1,7 @@
 ﻿using MandelbrotDrawer;
 using System;
-using MandelbrotDrawer.MandelbrotCalcServiceReference;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.ServiceModel;
 
 
 namespace MandelbrotServer
@@ -20,6 +12,11 @@ namespace MandelbrotServer
 
         Mandelbrot mandelbrot;
         ConnectionManager connectionManager;
+        // The frame images.
+        private Image[] images;
+
+        // The index of the current frame.
+        private int FrameNum = 0;
 
         public Form1()
         {
@@ -30,6 +27,8 @@ namespace MandelbrotServer
 
         private void button_go_Click(object sender, EventArgs e)
         {
+            showAnimationButton.Enabled = false;
+            mandelbrot = new Mandelbrot(pictureBox.Width, pictureBox.Height);
             var watch = System.Diagnostics.Stopwatch.StartNew();
             pictureBox.Image = mandelbrot.DrawMandelbrot(0);
             watch.Stop();
@@ -85,6 +84,35 @@ namespace MandelbrotServer
             }
             watch.Stop();
             Console.WriteLine(watch.Elapsed);
+            showAnimationButton.Enabled = true;
+        }
+
+
+        private void showAnimationButton_Click(object sender, EventArgs e)
+        {
+            images = new Bitmap[mandelbrot.GetScales().Count];
+            string name = "bitmap";
+            for (int i = 0; i < mandelbrot.GetScales().Count; i++)
+            {
+                name = "bitmap" + i.ToString() + ".Jpeg";
+                Console.WriteLine(name);
+                images[i] = Image.FromFile(name);
+            }
+            timer1.Enabled = !timer1.Enabled;
+            if (timer1.Enabled)
+                showAnimationButton.Text = "Stop";
+            else
+            {
+                showAnimationButton.Text = "Start";
+                pictureBox.Image = images[images.Length - 1];
+                images = null;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            FrameNum = ++FrameNum % images.Length;
+            pictureBox.Image = images[FrameNum];
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)

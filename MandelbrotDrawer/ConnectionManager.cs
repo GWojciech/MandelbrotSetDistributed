@@ -18,9 +18,7 @@ namespace MandelbrotDrawer
         private byte[] StateOfFrame;
         private Thread[] Threads;
         private List<double[]> Scales;
-        int numberOfFramesPerServer;
-        bool end = false;
-        
+        int numberOfFramesPerServer;        
 
         public ConnectionManager()
         {
@@ -45,12 +43,11 @@ namespace MandelbrotDrawer
         {
             Servers = new List<IMandelbrotCalc>();
             IMandelbrotCalc potentialServer;
-            String name;
+            string name;
             for (int i = 1; i <= 6; i++)
             {
                 name = "server" + i.ToString();
                 ChannelFactory<IMandelbrotCalc> chF = new ChannelFactory<IMandelbrotCalc>(name);
-                Console.WriteLine(name + " : " + chF.State);
                 try
                 {
                     potentialServer = chF.CreateChannel();
@@ -140,7 +137,6 @@ namespace MandelbrotDrawer
                         IsBackground = true
                     };
                     Threads[serverNr].Start();
-                    
                 }
 
                 for(int i=0; i<Servers.Count; i++)

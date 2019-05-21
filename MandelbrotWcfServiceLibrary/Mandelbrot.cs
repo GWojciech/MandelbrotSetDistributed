@@ -8,8 +8,6 @@ namespace MandelbrotDrawer
 {
     class Mandelbrot
     {
-        double yScale1 = 2.0, yScale2 = -1.0, xScale1 = 3.5, xScale2 = -2.5;
-
         private int height, width;
 
         public Mandelbrot(int width, int height)

@@ -153,15 +153,12 @@ namespace MandelbrotDrawer
                             }
                         }
                     });
-
-
                 });
                 bitmap.Save("bitmap" + count.ToString() + ".Jpeg", ImageFormat.Jpeg);
 
             }
             return bitmap;
         }
-
     }
 
 }
