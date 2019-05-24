@@ -12,25 +12,28 @@ namespace MandelbrotServer
 
         Mandelbrot mandelbrot;
         ConnectionManager connectionManager;
-        // The frame images.
         private Image[] images;
 
-        // The index of the current frame.
         private int FrameNum = 0;
 
         public Form1()
         {
             InitializeComponent();
-            mandelbrot = new Mandelbrot(pictureBox.Width, pictureBox.Height);
-            connectionManager = new ConnectionManager();
         }
 
         private void button_go_Click(object sender, EventArgs e)
         {
-            showAnimationButton.Enabled = false;
+            if (timer1.Enabled)
+            {
+                timer1.Enabled = !timer1.Enabled;
+                showAnimationButton.Text = "Start";
+                showAnimationButton.Enabled = false;
+            }
+            images = null;
             mandelbrot = new Mandelbrot(pictureBox.Width, pictureBox.Height);
+            connectionManager = new ConnectionManager();
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            pictureBox.Image = mandelbrot.DrawMandelbrot(0);
+            pictureBox.Image = mandelbrot.DrawMandelbrot(0, Convert.ToInt32(numericUpDownIterations.Value));
             watch.Stop();
             Console.WriteLine(watch.Elapsed);
         }
@@ -53,8 +56,8 @@ namespace MandelbrotServer
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             panel1.Visible = false;
-            mandelbrot.CalculateScaleAttributes(Math.Min(downX, e.X), Math.Max(downX, e.X), Math.Min(downY, e.Y), Math.Max(downY, e.Y), Convert.ToInt32(numericUpDownFrames.Value));
-            pictureBox.Image = mandelbrot.DrawMandelbrot(0);
+            mandelbrot.CalculateScaleAttributes(Math.Min(downX, e.X), Math.Max(downX, e.X), Math.Min(downY, e.Y), Math.Max(downY, e.Y), Convert.ToInt32(numericUpDownFrames.Value)+1);
+            pictureBox.Image = mandelbrot.DrawMandelbrot(0, Convert.ToInt32(numericUpDownIterations.Value));
 
         }
 
@@ -71,15 +74,17 @@ namespace MandelbrotServer
 
         private void animation_button_Click(object sender, EventArgs e)
         {
+            int framesPerServer = Convert.ToInt32(numericUpDownServers.Value);
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            if (connectionManager.getNumberOfServers() == 0)
+            if (connectionManager.getNumberOfServers() == 0 || framesPerServer == 0)
             {
-                mandelbrot.DrawMandelbrot(1);
+                mandelbrot.DrawMandelbrot(1, Convert.ToInt32(numericUpDownIterations.Value));
             }
             else
             {
                 connectionManager.SetScales(mandelbrot.GetScales());
-                connectionManager.SetNumberOfFramesPerServer(Convert.ToInt32(numericUpDownServers.Value));
+                connectionManager.SetNumberOfFramesPerServer(framesPerServer);
+                connectionManager.SetIterations(Convert.ToInt32(numericUpDownIterations.Value));
                 connectionManager.getImagesFromServers(pictureBox.Width, pictureBox.Height);
             }
             watch.Stop();
@@ -90,17 +95,19 @@ namespace MandelbrotServer
 
         private void showAnimationButton_Click(object sender, EventArgs e)
         {
-            images = new Bitmap[mandelbrot.GetScales().Count];
-            string name = "bitmap";
-            for (int i = 0; i < mandelbrot.GetScales().Count; i++)
-            {
-                name = "bitmap" + i.ToString() + ".Jpeg";
-                Console.WriteLine(name);
-                images[i] = Image.FromFile(name);
-            }
             timer1.Enabled = !timer1.Enabled;
             if (timer1.Enabled)
+            {
                 showAnimationButton.Text = "Stop";
+                images = new Bitmap[mandelbrot.GetScales().Count+1];
+                string name = "bitmap";
+                for (int i = 0; i < mandelbrot.GetScales().Count; i++)
+                {
+                    name = "bitmap" + i.ToString() + ".Jpeg";
+                    images[i] = Image.FromFile(name);
+                }
+                images[images.Length - 1] = pictureBox.Image;
+            }
             else
             {
                 showAnimationButton.Text = "Start";
@@ -111,12 +118,12 @@ namespace MandelbrotServer
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            FrameNum = ++FrameNum % images.Length;
+            FrameNum = ++FrameNum % (images.Length-1);
             pictureBox.Image = images[FrameNum];
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
+        {    
             if (e.Button == MouseButtons.Left)
             {
                 panel1.Width = Math.Abs(downX - e.X);

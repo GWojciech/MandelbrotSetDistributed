@@ -17,7 +17,6 @@ namespace MandelbrotDrawer
         int Width;
         int Height;
 
-        //double yScale1 = 2.0, yScale2 = -1.0, xScale1 = 3.5, xScale2 = -2.5;
         List<double[]> Scales;
 
         public Mandelbrot(int width, int height)
@@ -46,9 +45,7 @@ namespace MandelbrotDrawer
 
         public void CalculateScaleAttributes(int x1, int x2, int y1, int y2, int numberOfFrames)
         {
-            Console.WriteLine("Współrzędne {0} {1} {2} {3}", x1, x2, y1, y2);
             double[] scale = Scales[Scales.Count - 1], scaleTmp;
-            Console.WriteLine("Start z {0} {1} {2} {3}", scale[0], scale[1], scale[2], scale[3]);
 
             int deltaX1 = x1 / numberOfFrames;
             int deltaX2 = (Width - x2) / numberOfFrames;
@@ -81,13 +78,12 @@ namespace MandelbrotDrawer
 
             scaleTmp[3] = coordinateY1;
             scaleTmp[2] = coordinateY2 + Math.Abs(scaleTmp[3]);
-            Console.WriteLine("{0} {1} {2} {3}", scaleTmp[0], scaleTmp[1], scaleTmp[2], scaleTmp[3]);
 
             return scaleTmp;
 
         }
 
-        public int Calculate_mandelbrot(int xp, int yp, double[] scale)
+        public int Calculate_mandelbrot(int xp, int yp, double[] scale, int numberOfIterations)
         {
             double x, y, x2, y2;
             int iteration = 0;
@@ -95,7 +91,7 @@ namespace MandelbrotDrawer
             double y0 = ScaleY0(yp, scale);
 
             x = y = x2 = y2 = 0.0;
-            while (x2 + y2 <= 4.0 && iteration < 2000)
+            while (x2 + y2 <= 4.0 && iteration < numberOfIterations)
             {
                 double tmp = x2 - y2 + x0;
                 y = 2.0 * x * y + y0;
@@ -104,11 +100,11 @@ namespace MandelbrotDrawer
                 x2 = x * x;
                 y2 = y * y;
             }
-            return iteration == 2000 ? 0 : iteration;
+            return iteration == numberOfIterations ? 0 : iteration;
         }
 
 
-        public Bitmap DrawMandelbrot(int variant)
+        public Bitmap DrawMandelbrot(int variant, int numberOfIterations)
         {
             double[] scale;
             int startIteration;
@@ -130,7 +126,7 @@ namespace MandelbrotDrawer
                 {
                     Parallel.For(0, Height, j =>
                     {
-                        int result = Calculate_mandelbrot(i, j, scale);
+                        int result = Calculate_mandelbrot(i, j, scale, numberOfIterations);
                         lock (bitmap)
                         {
                             if (result > 0 && result < 333)
@@ -154,8 +150,13 @@ namespace MandelbrotDrawer
                         }
                     });
                 });
-                bitmap.Save("bitmap" + count.ToString() + ".Jpeg", ImageFormat.Jpeg);
-
+                try
+                {
+                    bitmap.Save("bitmap" + count.ToString() + ".Jpeg", ImageFormat.Jpeg);
+                }catch(Exception ex)
+                {
+                    Console.Write(ex);
+                }
             }
             return bitmap;
         }

@@ -31,7 +31,7 @@ namespace MandelbrotDrawer
 
 
 
-        public int Calculate_mandelbrot(int xp, int yp, double[] scale)
+        public int Calculate_mandelbrot(int xp, int yp, double[] scale, int numberOfIterations)
         {
             double x, y, x2, y2;
             int iteration = 0;
@@ -39,7 +39,7 @@ namespace MandelbrotDrawer
             double y0 = ScaleY0(yp, scale);
 
             x = y = x2 = y2 = 0.0;
-            while (x2 + y2 <= 4.0 && iteration < 2000)
+            while (x2 + y2 <= 4.0 && iteration < numberOfIterations)
             {
                 double tmp = x2 - y2 + x0;
                 y = 2.0 * x * y + y0;
@@ -48,7 +48,7 @@ namespace MandelbrotDrawer
                 x2 = x * x;
                 y2 = y * y;
             }
-            return iteration == 2000 ? 0 : iteration;
+            return iteration == numberOfIterations ? 0 : iteration;
         }
 
 

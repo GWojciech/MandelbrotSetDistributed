@@ -17,7 +17,7 @@ namespace MandelbrotWcfServiceLibrary
     {
         private Mandelbrot mandelbrot;
 
-        public List<MemoryStream> DrawMandelbrot(int width, int height, List<List<double>> Scales)
+        public List<MemoryStream> DrawMandelbrot(int width, int height, List<List<double>> Scales, int numberOfIterations)
         {
             Console.WriteLine("I am drawing");
             mandelbrot = new Mandelbrot(width, height);
@@ -40,7 +40,7 @@ namespace MandelbrotWcfServiceLibrary
                 //    for (int j = 0; j < height; j++)
                 //    {
 
-                        int result = mandelbrot.Calculate_mandelbrot(i, j, scale);
+                        int result = mandelbrot.Calculate_mandelbrot(i, j, scale, numberOfIterations);
                         lock (bitmap)
                         {
                             if (result > 0 && result < 333)

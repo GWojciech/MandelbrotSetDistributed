@@ -43,9 +43,12 @@ namespace MandelbrotServer
             this.numericUpDownFrames = new System.Windows.Forms.NumericUpDown();
             this.showAnimationButton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDownIterations = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrames)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIterations)).BeginInit();
             this.SuspendLayout();
             // 
             // button_go
@@ -132,7 +135,7 @@ namespace MandelbrotServer
             // 
             // animation_button
             // 
-            this.animation_button.Location = new System.Drawing.Point(1119, 234);
+            this.animation_button.Location = new System.Drawing.Point(1119, 320);
             this.animation_button.Name = "animation_button";
             this.animation_button.Size = new System.Drawing.Size(75, 23);
             this.animation_button.TabIndex = 28;
@@ -169,7 +172,7 @@ namespace MandelbrotServer
             // showAnimationButton
             // 
             this.showAnimationButton.Enabled = false;
-            this.showAnimationButton.Location = new System.Drawing.Point(1200, 234);
+            this.showAnimationButton.Location = new System.Drawing.Point(1200, 320);
             this.showAnimationButton.Name = "showAnimationButton";
             this.showAnimationButton.Size = new System.Drawing.Size(62, 23);
             this.showAnimationButton.TabIndex = 31;
@@ -181,12 +184,45 @@ namespace MandelbrotServer
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1195, 229);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(49, 13);
+            this.label3.TabIndex = 33;
+            this.label3.Text = "iterations";
+            // 
+            // numericUpDownIterations
+            // 
+            this.numericUpDownIterations.Increment = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDownIterations.Location = new System.Drawing.Point(1119, 225);
+            this.numericUpDownIterations.Maximum = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+            this.numericUpDownIterations.Name = "numericUpDownIterations";
+            this.numericUpDownIterations.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDownIterations.TabIndex = 32;
+            this.numericUpDownIterations.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.numericUpDownIterations);
             this.Controls.Add(this.showAnimationButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numericUpDownFrames);
@@ -203,6 +239,7 @@ namespace MandelbrotServer
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrames)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIterations)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,6 +258,8 @@ namespace MandelbrotServer
         private System.Windows.Forms.NumericUpDown numericUpDownFrames;
         private System.Windows.Forms.Button showAnimationButton;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown numericUpDownIterations;
     }
 }
 

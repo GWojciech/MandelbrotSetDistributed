@@ -18,7 +18,8 @@ namespace MandelbrotDrawer
         private byte[] StateOfFrame;
         private Thread[] Threads;
         private List<double[]> Scales;
-        int numberOfFramesPerServer;        
+        int numberOfFramesPerServer;
+        private int Iterations;
 
         public ConnectionManager()
         {
@@ -37,6 +38,11 @@ namespace MandelbrotDrawer
             {
                 return null;
             }
+        }
+
+        public void SetIterations(int iterations)
+        {
+            Iterations = iterations;
         }
 
         public void SetServers()
@@ -65,6 +71,10 @@ namespace MandelbrotDrawer
         {
             this.Scales = scales;
             StateOfFrame = new byte[Scales.Count];
+            //for(int i = 0; i <Scales.Count; i+=numberOfFrames)
+            //{
+            //    StateOfFrame[i] = 1;
+            //}
         }
 
         public void SetNumberOfFramesPerServer(int numberOfFramesPerServer)
@@ -92,10 +102,9 @@ namespace MandelbrotDrawer
                         }
                     }
                 }
-                Console.WriteLine("{0} {1} {2}", number, width, height);
                 if (scalesTmp.Count > 0)
                 {
-                    bitmaps = Servers[number].DrawMandelbrot(width, height, scalesTmp);
+                    bitmaps = Servers[number].DrawMandelbrot(width, height, scalesTmp, Iterations);
                     Image image;
                     int numberOfFrame = 0;
                     foreach (MemoryStream bitmap in bitmaps)
@@ -131,7 +140,6 @@ namespace MandelbrotDrawer
                 for(int i=0; i<Servers.Count; i++)
                 {
                     int serverNr = i;
-                    Console.WriteLine(i);
                     Threads[serverNr] = new Thread(delegate () { ConnectWithServerThread(serverNr, width, height); })
                     {
                         IsBackground = true
