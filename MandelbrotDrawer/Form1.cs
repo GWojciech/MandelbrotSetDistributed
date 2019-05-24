@@ -85,7 +85,7 @@ namespace MandelbrotServer
                 connectionManager.SetScales(mandelbrot.GetScales());
                 connectionManager.SetNumberOfFramesPerServer(framesPerServer);
                 connectionManager.SetIterations(Convert.ToInt32(numericUpDownIterations.Value));
-                connectionManager.getImagesFromServers(pictureBox.Width, pictureBox.Height);
+                connectionManager.getImagesFromServers(Convert.ToInt32(numericUpDownResolutionWidth.Value), Convert.ToInt32(numericUpDownResolutionHeight.Value));
             }
             watch.Stop();
             Console.WriteLine(watch.Elapsed);
@@ -121,6 +121,7 @@ namespace MandelbrotServer
             FrameNum = ++FrameNum % (images.Length-1);
             pictureBox.Image = images[FrameNum];
         }
+
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {    

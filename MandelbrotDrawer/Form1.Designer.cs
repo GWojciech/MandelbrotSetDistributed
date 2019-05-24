@@ -45,10 +45,16 @@ namespace MandelbrotServer
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDownIterations = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownResolutionWidth = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownResolutionHeight = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrames)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIterations)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionHeight)).BeginInit();
             this.SuspendLayout();
             // 
             // button_go
@@ -66,10 +72,10 @@ namespace MandelbrotServer
             this.pictureBox.BackColor = System.Drawing.Color.Gainsboro;
             this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pictureBox.Location = new System.Drawing.Point(12, 9);
+            this.pictureBox.Location = new System.Drawing.Point(12, 22);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(1100, 660);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 20;
             this.pictureBox.TabStop = false;
             this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
@@ -215,12 +221,88 @@ namespace MandelbrotServer
             0,
             0});
             // 
+            // numericUpDownResolutionWidth
+            // 
+            this.numericUpDownResolutionWidth.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownResolutionWidth.Location = new System.Drawing.Point(1119, 277);
+            this.numericUpDownResolutionWidth.Maximum = new decimal(new int[] {
+            1920,
+            0,
+            0,
+            0});
+            this.numericUpDownResolutionWidth.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownResolutionWidth.Name = "numericUpDownResolutionWidth";
+            this.numericUpDownResolutionWidth.Size = new System.Drawing.Size(54, 20);
+            this.numericUpDownResolutionWidth.TabIndex = 34;
+            this.numericUpDownResolutionWidth.Value = new decimal(new int[] {
+            1100,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDownResolutionHeight
+            // 
+            this.numericUpDownResolutionHeight.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownResolutionHeight.Location = new System.Drawing.Point(1200, 277);
+            this.numericUpDownResolutionHeight.Maximum = new decimal(new int[] {
+            1080,
+            0,
+            0,
+            0});
+            this.numericUpDownResolutionHeight.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownResolutionHeight.Name = "numericUpDownResolutionHeight";
+            this.numericUpDownResolutionHeight.Size = new System.Drawing.Size(54, 20);
+            this.numericUpDownResolutionHeight.TabIndex = 35;
+            this.numericUpDownResolutionHeight.Value = new decimal(new int[] {
+            660,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1116, 261);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.TabIndex = 36;
+            this.label4.Text = "Resolution";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(1182, 279);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(12, 13);
+            this.label5.TabIndex = 37;
+            this.label5.Text = "x";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.numericUpDownResolutionHeight);
+            this.Controls.Add(this.numericUpDownResolutionWidth);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.numericUpDownIterations);
             this.Controls.Add(this.showAnimationButton);
@@ -240,6 +322,8 @@ namespace MandelbrotServer
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrames)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIterations)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionHeight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -260,6 +344,10 @@ namespace MandelbrotServer
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDownIterations;
+        private System.Windows.Forms.NumericUpDown numericUpDownResolutionWidth;
+        private System.Windows.Forms.NumericUpDown numericUpDownResolutionHeight;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
