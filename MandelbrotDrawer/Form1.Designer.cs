@@ -230,7 +230,7 @@ namespace MandelbrotServer
             0});
             this.numericUpDownResolutionWidth.Location = new System.Drawing.Point(1119, 277);
             this.numericUpDownResolutionWidth.Maximum = new decimal(new int[] {
-            1920,
+            3840,
             0,
             0,
             0});
@@ -257,7 +257,7 @@ namespace MandelbrotServer
             0});
             this.numericUpDownResolutionHeight.Location = new System.Drawing.Point(1200, 277);
             this.numericUpDownResolutionHeight.Maximum = new decimal(new int[] {
-            1080,
+            2160,
             0,
             0,
             0});

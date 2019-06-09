@@ -29,13 +29,13 @@ namespace MandelbrotServer
                 showAnimationButton.Text = "Start";
                 showAnimationButton.Enabled = false;
             }
-            images = null;
             mandelbrot = new Mandelbrot(pictureBox.Width, pictureBox.Height);
             connectionManager = new ConnectionManager();
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+            server_info_textBox.Text = "Connected: " + connectionManager.getNumberOfServers();
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
             pictureBox.Image = mandelbrot.DrawMandelbrot(0, Convert.ToInt32(numericUpDownIterations.Value));
-            watch.Stop();
-            Console.WriteLine(watch.Elapsed);
+            //watch.Stop();
+            //Console.WriteLine(watch.Elapsed);
         }
 
 
@@ -63,8 +63,16 @@ namespace MandelbrotServer
 
         private void button_server_Click(object sender, EventArgs e)
         {
-            connectionManager.SetServers();
-            server_info_textBox.Text = "Connected: " + connectionManager.getNumberOfServers();
+            if (connectionManager != null)
+            {
+                connectionManager.SetServers();
+                server_info_textBox.Text = "Connected: " + connectionManager.getNumberOfServers();
+            }
+            else
+            {
+                server_info_textBox.Text = "Not pressed 'Go!'";
+
+            }
         }
 
         private void server_info_textBox_TextChanged(object sender, EventArgs e)
@@ -82,13 +90,19 @@ namespace MandelbrotServer
             }
             else
             {
+                Console.WriteLine("Resolution: " + numericUpDownResolutionWidth.Value + "x" + numericUpDownResolutionHeight.Value + "\n" +
+                    "Iterations: " + numericUpDownIterations.Value + "\n" +
+                    "Frames per server: " + framesPerServer + "\n" +
+                    "Frames per zoom: " + numericUpDownFrames.Value + "\n" +
+                    "Servers: " + connectionManager.getNumberOfServers()
+                    );
                 connectionManager.SetScales(mandelbrot.GetScales());
                 connectionManager.SetNumberOfFramesPerServer(framesPerServer);
                 connectionManager.SetIterations(Convert.ToInt32(numericUpDownIterations.Value));
                 connectionManager.getImagesFromServers(Convert.ToInt32(numericUpDownResolutionWidth.Value), Convert.ToInt32(numericUpDownResolutionHeight.Value));
             }
             watch.Stop();
-            Console.WriteLine(watch.Elapsed);
+            Console.WriteLine("Total in client," + watch.Elapsed);
             showAnimationButton.Enabled = true;
         }
 

@@ -16,9 +16,11 @@ namespace MandelbrotWcfServiceLibrary
     public class MandelbrotCalcService : IMandelbrotCalc
     {
         private Mandelbrot mandelbrot;
+        private static List<TimeSpan> timesOfExecution = new List<TimeSpan>();
 
         public List<MemoryStream> DrawMandelbrot(int width, int height, List<List<double>> Scales, int numberOfIterations)
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             Console.WriteLine("I am drawing");
             mandelbrot = new Mandelbrot(width, height);
             List<MemoryStream> images = new List<MemoryStream>();
@@ -72,7 +74,8 @@ namespace MandelbrotWcfServiceLibrary
                 bitmap.Save(stream, ImageFormat.Jpeg);
                 images.Add(stream);
                     }
-
+            watch.Stop();
+            timesOfExecution.Add(watch.Elapsed);
             return images;
         }
 
@@ -97,6 +100,13 @@ namespace MandelbrotWcfServiceLibrary
                 composite.StringValue += "Suffix";
             }
             return composite;
+        }
+
+        public List<TimeSpan> GetTimes()
+        {
+            List<TimeSpan> tmp = timesOfExecution;
+            timesOfExecution = new List<TimeSpan>();
+            return tmp;
         }
     }
 }

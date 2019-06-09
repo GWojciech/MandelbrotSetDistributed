@@ -87,6 +87,7 @@ namespace MandelbrotDrawer
             List <List<double>> scalesTmp = new List<List<double>>();
             List<MemoryStream> bitmaps = new List<MemoryStream>();
             List<int> frames;
+            List<TimeSpan> timeInClient = new List<TimeSpan>();
             for (; ; )
             {
                 frames = new List<int>();
@@ -104,7 +105,10 @@ namespace MandelbrotDrawer
                 }
                 if (scalesTmp.Count > 0)
                 {
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     bitmaps = Servers[number].DrawMandelbrot(width, height, scalesTmp, Iterations);
+                    watch.Stop();
+                    timeInClient.Add(watch.Elapsed);
                     Image image;
                     int numberOfFrame = 0;
                     foreach (MemoryStream bitmap in bitmaps)
@@ -117,6 +121,14 @@ namespace MandelbrotDrawer
                 }
                 else
                 {
+                    TimeSpan timeTotal = TimeSpan.Zero;
+                    Console.WriteLine("Results in client about Server" + number);
+                    timeInClient.ForEach(item => {
+                        Console.WriteLine("From client about server" + number+ ", " + item);
+                        timeTotal += item;
+                    });
+                    Console.WriteLine("TOTAL Results in client about Server" + number + ", " + timeTotal);
+
                     break;
                 }
                     
@@ -137,6 +149,7 @@ namespace MandelbrotDrawer
             if (Servers != null)
             {
                 Threads = new Thread[Servers.Count];
+                TimeSpan time;
                 for(int i=0; i<Servers.Count; i++)
                 {
                     int serverNr = i;
@@ -149,7 +162,14 @@ namespace MandelbrotDrawer
 
                 for(int i=0; i<Servers.Count; i++)
                 {
+                    time = TimeSpan.Zero;
                     Threads[i].Join();
+                    Console.WriteLine("Results from server" + i );
+                    Servers[i].GetTimes().ForEach(item => {
+                        Console.WriteLine("From Server" + i +", " + item + " ");
+                        time += item;
+                    });
+                    Console.WriteLine("Total results from server" + i + ", " + time);
                 }
 
             }

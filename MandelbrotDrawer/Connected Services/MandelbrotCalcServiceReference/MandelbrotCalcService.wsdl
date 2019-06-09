@@ -22,6 +22,12 @@
   <wsdl:message name="IMandelbrotCalc_DrawMandelbrot_OutputMessage">
     <wsdl:part name="parameters" element="tns:DrawMandelbrotResponse" />
   </wsdl:message>
+  <wsdl:message name="IMandelbrotCalc_GetTimes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimes" />
+  </wsdl:message>
+  <wsdl:message name="IMandelbrotCalc_GetTimes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimesResponse" />
+  </wsdl:message>
   <wsdl:message name="IMandelbrotCalc_GetDataUsingDataContract_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
   </wsdl:message>
@@ -42,6 +48,10 @@
     <wsdl:operation name="DrawMandelbrot">
       <wsdl:input wsaw:Action="http://tempuri.org/IMandelbrotCalc/DrawMandelbrot" message="tns:IMandelbrotCalc_DrawMandelbrot_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMandelbrotCalc/DrawMandelbrotResponse" message="tns:IMandelbrotCalc_DrawMandelbrot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMandelbrotCalc/GetTimes" message="tns:IMandelbrotCalc_GetTimes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMandelbrotCalc/GetTimesResponse" message="tns:IMandelbrotCalc_GetTimes_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDataUsingDataContract">
       <wsdl:input wsaw:Action="http://tempuri.org/IMandelbrotCalc/GetDataUsingDataContract" message="tns:IMandelbrotCalc_GetDataUsingDataContract_InputMessage" />
@@ -65,6 +75,15 @@
     </wsdl:operation>
     <wsdl:operation name="DrawMandelbrot">
       <soap:operation soapAction="http://tempuri.org/IMandelbrotCalc/DrawMandelbrot" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTimes">
+      <soap:operation soapAction="http://tempuri.org/IMandelbrotCalc/GetTimes" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

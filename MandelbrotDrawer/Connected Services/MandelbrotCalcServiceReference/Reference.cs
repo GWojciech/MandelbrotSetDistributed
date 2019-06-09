@@ -90,6 +90,12 @@ namespace MandelbrotDrawer.MandelbrotCalcServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMandelbrotCalc/DrawMandelbrot", ReplyAction="http://tempuri.org/IMandelbrotCalc/DrawMandelbrotResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<System.IO.MemoryStream>> DrawMandelbrotAsync(int width, int height, System.Collections.Generic.List<System.Collections.Generic.List<double>> Scales, int numberOfIterations);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMandelbrotCalc/GetTimes", ReplyAction="http://tempuri.org/IMandelbrotCalc/GetTimesResponse")]
+        System.Collections.Generic.List<System.TimeSpan> GetTimes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMandelbrotCalc/GetTimes", ReplyAction="http://tempuri.org/IMandelbrotCalc/GetTimesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<System.TimeSpan>> GetTimesAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMandelbrotCalc/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IMandelbrotCalc/GetDataUsingDataContractResponse")]
         MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType GetDataUsingDataContract(MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType composite);
         
@@ -144,6 +150,14 @@ namespace MandelbrotDrawer.MandelbrotCalcServiceReference {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<System.IO.MemoryStream>> DrawMandelbrotAsync(int width, int height, System.Collections.Generic.List<System.Collections.Generic.List<double>> Scales, int numberOfIterations) {
             return base.Channel.DrawMandelbrotAsync(width, height, Scales, numberOfIterations);
+        }
+        
+        public System.Collections.Generic.List<System.TimeSpan> GetTimes() {
+            return base.Channel.GetTimes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.TimeSpan>> GetTimesAsync() {
+            return base.Channel.GetTimesAsync();
         }
         
         public MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType GetDataUsingDataContract(MandelbrotDrawer.MandelbrotCalcServiceReference.CompositeType composite) {

@@ -20,6 +20,9 @@ namespace MandelbrotWcfServiceLibrary
         List<MemoryStream> DrawMandelbrot(int width, int height, List<List<double>> Scales, int numberOfIterations);
 
         [OperationContract]
+        List<TimeSpan> GetTimes();
+
+        [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
         [OperationContract]
